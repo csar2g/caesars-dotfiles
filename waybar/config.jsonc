@@ -1,0 +1,231 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "top",
+	"position": "bottom", 
+    "height": 34, 
+    "spacing": 0, 
+    "compositor": "none",
+
+	/*
+	MODULES POSITION 
+	*/
+
+    "modules-left": ["group/group-power", "custom/arrow1", "hyprland/workspaces", "custom/arrow", "hyprland/window"],
+    
+	"modules-right": ["backlight", "custom/separator", "pulseaudio", "pulseaudio#mic", "custom/separator", "network", "custom/separator",  "power-profiles-daemon", "battery", "battery#bat2", "custom/separator", "clock",  "custom/arrow4", "group/specs"],
+
+	/*
+	MODULES CONFIGS 
+	*/
+
+    "custom/logo":
+	{
+      "format": "",
+      "tooltip": false,
+      "on-click": "wofi --show drun"
+    },
+
+	"custom/separator":
+	{
+		"format": "󰇙",
+		"tooltip": false
+	},
+
+	"group/group-power": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 500,
+			"children-class": "not-power",
+			"transition-to-left": true
+		},
+		"modules": [
+			"custom/logo",
+			"custom/power", 
+			"custom/quit",
+			"custom/lock",
+			"custom/reboot"
+		]
+	},
+	
+	"custom/quit": {
+		"format": "",
+		"tooltip": false,
+		"on-click": "hyprctl dispatch exit"
+	},
+	
+	"custom/lock": {
+		"format": "",
+		"tooltip": false,
+		"on-click": "loginctl lock-session"
+	},
+	
+	"custom/reboot": {
+		"format": "",
+		"tooltip": false,
+		"on-click": "reboot"
+	},
+	
+	"custom/power": {
+		"format": "",
+		"tooltip": false,
+		"on-click": "shutdown now"
+	},
+
+	"hyprland/workspaces":
+	{
+		"format": "{name}",
+		"on-click": "active",	
+		"persistent-workspaces":{
+		"*": [
+				1,
+				2,
+				3,
+				4,
+				5
+			]
+		  }
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        },
+		"tooltip": false
+    },
+    
+	"tray": {
+        "spacing": 10
+    },
+
+	"clock":{
+    	"interval": 1, 
+		"timezone": "America/Los_Angeles",
+		"format": "{:%T}  ",
+		"format-alt": "{:%a, %B %d}  ",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+		"on-click-right": "gnome-calendar"
+	},	
+
+	"backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+		"tooltip": false
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-full": "{icon} {capacity}%", 
+        "format-charging": "  {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["  ", "  ", "  ", "  ", "  "],
+		"tooltip": false
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    
+	"power-profiles-daemon": {
+      "format": "{icon}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": "",
+        "performance": "",
+        "balanced": " ",
+        "power-saver": " "
+      }
+    },
+   
+	"network": {
+        "format-wifi": "󰖩  {essid} ({signalStrength}%)",
+        "format-ethernet": "{ifname} ",
+        "format-linked": "{ifname} ",
+        "format-disconnected": /*"Disconnected*/ "󱛅 ",
+		"tooltip": false
+	},
+	
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-bluetooth-muted": "   {icon}",
+        "format-icons": {
+            "headphone": " ",
+            "hands-free": " ",
+            "headset": " ",
+            "phone": " ",
+            "portable": " ",
+            "car": "",
+            "default": [" ", " ", "  "]
+        },
+        "on-click": "pavucontrol",
+		"tooltip": false
+    },
+	
+    "pulseaudio#mic": {
+         "format": "{format_source}",
+         "format-source": " {volume}%",
+         "format-source-muted": "  {volume}%",
+         "tooltip-format": "{format_source}",
+         "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+         "on-scroll-down": "pactl set-source-volume 0 -1%",
+         "on-scroll-up": "pactl set-source-volume 0 +1%",
+		 "tooltip": false
+    },
+
+	"custom/specs":{
+		"format":" 󰓅 ",
+		"tooltip":false
+	},
+
+	"cpu": {
+		"interval": 10,
+		"format": "  {}% 󰇙",
+		"max-length": 10
+	},
+
+	"memory": {
+		"interval": 30,
+		"format": "   {used:0.1f}G/{total:0.1f}G 󰇙",
+		"max-length": 20
+	},
+
+	 "temperature": {
+		"interval": 30,
+		"format": " {temperatureC}°C ",
+		"tooltip": false
+	},
+
+	"custom/arrow": {
+		"format": " ",
+		"tooltip": false
+	},
+
+	"custom/arrow1": {
+		"format": "",
+		"tooltip": false
+	},
+
+	"custom/arrow4": {
+		"format": "",
+		"tooltip": false
+	},
+
+	"group/specs":{
+		"orientation": "horizontal",
+		"drawer": {
+			"transition-duration": 600,
+			"children-class": "not-power",
+			"transition-left-to-right": false,
+			"click-to-reveal": true
+		},
+		"modules": ["custom/specs","cpu", "memory", "temperature"]
+	}
+}
